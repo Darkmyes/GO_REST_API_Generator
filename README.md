@@ -91,4 +91,4 @@ lang can be "NODEJS","PHP" or "GO" and auth_mode can be "jwt" or "none".
 ## Como usar / How to use
 Una vez descargado y descomprimido puedes modificar los archivos objects.json y proyects.json y luego ejecutar en una terminal dentro del directorio "go run main.go".
 
-Once Downloaded and decompress, you can modify the objects.json and proyects.json files and run in the terminal while standing in the directory of the proyect "go run main.go".
+Once Downloaded and decompress, you can modify the objects.json and proyects.json files and run in the terminal while standing in the project directory "go run main.go".
