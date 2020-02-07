@@ -7,9 +7,17 @@ This is a REST API generator based in GO language that can generate code in Node
 ## Estructura del Proyecto / Project Structure
 
 El directorio *public* contiene los archivos .json necesarios para la generación de la API REST.
-El directorio *proyect_maker* contiene los archivos de generación de código.
+El directorio *proyect_maker* contiene los archivos de generación del código de la API REST.
+
+The directory *public* contain the .json needed files to generate the main API REST.
+The directory *proyect_make* contain the needed code files to generate the main API REST code.
 
 ## Estructura de un Proyecto JSON / JSON Project Structue
+
+lang puede ser "NODEJS","PHP" o "GO" y auth_mode "jwt" o "none".
+
+lang can be "NODEJS","PHP" or "GO" and auth_mode can be "jwt" or "none".
+
 ```json
 {
     "id" : 1,
@@ -34,9 +42,6 @@ El directorio *proyect_maker* contiene los archivos de generación de código.
     "upd_date" : "2019-09-05"
 }
 ```
-lang puede ser "NODEJS","PHP" o "GO" y auth_mode "jwt" o "none".
-
-lang can be "NODEJS","PHP" or "GO" and auth_mode can be "jwt" or "none".
 
 ## Estructura de un Objeto de la Base de Datos JSON / Database Object JSON Structure
 
