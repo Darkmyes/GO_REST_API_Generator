@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Darkmyes --Backend Generator</title>
+
+    <!--STYLE IMPORTS-->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="navigation">
+        <div class="nav_title">
+            <h2>Backend Generator</h2>
+        </div>
+        <button class="nav_item" onclick="moveTo('home')">
+            Home
+        </button>
+        <button class="nav_item" onclick="moveTo('proyects')">
+            Proyects
+        </button>
+        <button class="nav_item" onclick="moveTo('configuration')">
+            Configuration
+        </button>
+        <button class="nav_item" onclick="moveTo('help')">
+            Help
+        </button>
+    </div>
+    <div class="view" id="view">
+        <!-- Home -->
+        <div class="home" id="home">
+            <div class="lobby">
+                <h1>Backend Generator</h1>
+                <h2>Author: Darkmyes</h2>
+                <h2>Version: 1.0</h2>
+                <h2>Release Date: 02/09/2019</h2>
+            </div>
+        </div>
+
+        <!-- Proyects -->
+        <div class="proyects" id="proyects">
+            <div class="proyect">
+                <div class="proyect_attrib">
+                    <h3>Id :</h3> 1
+                </div>
+                <div class="proyect_attrib">
+                    <h3>Name :</h3> Prueba1
+                </div>
+                <div class="proyect_attrib">
+                    <h3>Description :</h3> Proyecto de prueba
+                </div>
+                <div class="proyect_attrib">
+                    <h3>Language :</h3> PHP
+                </div>
+                <div class="proyect_attrib">
+                    <h3>Data Base :</h3> MYSQL
+                </div>
+            </div>
+        </div>
+
+        <!-- Configuration -->
+        <div class="configuration" id="configuration">
+            <div class="configs">
+                
+            </div>
+        </div>
+
+        <!-- Help -->
+        <div class="help" id="help">
+            <div class="help_info">
+                
+            </div>
+        </div>
+    </div>
+
+    <!--Scripts-->
+    <script src="index.js"></script>
+</body>
+</html>

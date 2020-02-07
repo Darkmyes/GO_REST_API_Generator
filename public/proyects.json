@@ -1,0 +1,22 @@
+{
+    "id" : 1,
+    "name" : "prueba",
+    "desc" : "",
+    "db" : "MYSQL",
+    "db_data" : {
+        "db_url" :  "127.0.0.1",
+        "db_port" : "3306",
+        "db_name" : "prueba",
+        "db_user" : "root",
+        "db_pass" :  "Qweasdzxc1234",
+        "db_charset" : "utf8",
+        "db_collate" : "utf8_general_ci"
+    },
+    "lang" : "PHP",
+    "path" : "",
+    "gen_sql" : true, 
+    "gen_android" : false,    
+    "auth_mode" : "jwt",      
+    "init_date" : "2019-09-05",
+    "upd_date" : "2019-09-05"
+}
