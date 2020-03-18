@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"flag"
 	"fmt"
 	"log"
@@ -68,6 +69,29 @@ func ShowInfo() {
 	fmt.Println("\t" + check_emoji + " go run main.go -mode=db_read_gen -db=mysql -server=localhost -user=root -pass=Password -db_name=DB -folder=project_folder")
 }
 
+func validateDBVars(db_name, user, db_server string) error {
+	valid := true
+	message := ""
+	if db_name == " " {
+		valid = false
+		message += "- Error: No Database Name provided\n"
+	}
+	if user == " " {
+		valid = false
+		message += "- Error: No Database User provided\n"
+	}
+	if db_server == " " {
+		valid = false
+		message += "- Error: No Database URL provided\n"
+	}
+
+	if !valid {
+		return errors.New(message)
+	}
+
+	return nil
+}
+
 func main() {
 	var mode, folderPath, db_type, db_name, user, pass, port, lang, db_server string
 
@@ -99,10 +123,23 @@ func main() {
 		api_maker.GenerateFromJSON(folderPath, strings.ToUpper(lang))
 		break
 	case "db_read":
+		valErr := validateDBVars(db_name, user, db_server)
+		if valErr != nil {
+			fmt.Println(valErr)
+			break
+		}
 		api_maker.ReadFromDB(folderPath, strings.ToUpper(db_type), db_server, db_name, user, pass, port)
 		break
 	case "db_read_gen":
+		valErr := validateDBVars(db_name, user, db_server)
+		if valErr != nil {
+			fmt.Println(valErr)
+			break
+		}
 		api_maker.ReadGenerateFromBD(folderPath, strings.ToUpper(db_type), db_server, db_name, user, pass, port, lang)
+		break
+	default:
+		fmt.Println("- Error: Bad mode given")
 		break
 	}
 
