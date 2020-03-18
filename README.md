@@ -1,4 +1,4 @@
-# GOBackendGenerator
+# GO_REST_API_Generator
 
 Esta es un generador de REST APIs escrito en GO y puede generar código en NodeJS, PHPy GO.
 
