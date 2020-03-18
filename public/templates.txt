@@ -1,0 +1,39 @@
+Proyects Template
+{
+    "id" : 1,
+    "name" : "prueba",
+    "desc" : "Primera prueba del sistema",
+    "db" : "MYSQL",    
+    "db_data" : {
+        "db_url" : "localhost",
+        "db_port" : "3306",
+        "db_name" : "prueba1",
+        "db_user" : "root",
+        "db_pass" : "1234"
+    },
+    "lang" : "PHP",
+    "folder_path" : "C://servers/backends/prueba",
+    "init_date" : "2019-09-01",
+    "upd_date" : "2019-09-01"
+}
+
+Objects/Structs (Entitys / Relations) Template
+{
+    "proyect_id" : 1,
+    "name" : "usuarios",
+    "tbl_name" : "t_usuarios",
+    "columns" : [
+        {
+            "name" : "cedula_ruc",
+            "col_name" : "cedula_ruc",
+            "col_type" : "VARCHAR",
+            "db_lenght" : "10",
+            "primary_key" : true,
+            "foreign_key" : false,
+            "tbl_ref" : "",
+            "col_refs" : [
+                ""
+            ]
+        }
+    ]
+}

@@ -1,0 +1,6 @@
+CREATE DATABASE {{.Db_Data.Db_Name}} 
+{{- if not (eq .Db_Data.DB_Charset "none" ) }} CHARACTER SET {{.Db_Data.DB_Charset}} COLLATE {{.Db_Data.DB_Collate}}
+{{- end -}}
+;
+USE {{.Db_Data.Db_Name}};
+

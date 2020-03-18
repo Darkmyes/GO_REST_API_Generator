@@ -1,0 +1,119 @@
+<?php
+	class {{.Name}} {
+		public $connection = null;
+        {{range .Columns -}}
+        public ${{- .Name}} = 0;
+        {{end}}
+		function insert(){
+			$data = array(
+                {{range $index, $element := .Columns -}}
+                {{- if $index -}}
+                ,
+                {{end -}}
+                '{{.Name}}' => $this->{{- .Name}}
+                {{- end}}
+			);
+			$sql = 'INSERT INTO {{.Name}} (
+                {{- range $index, $element := .Columns -}}
+                {{- if $index -}} , {{end -}}
+                {{- .Name}}
+                {{- end -}}
+            ) VALUES (
+                {{- range $index, $element := .Columns -}}
+                {{- if $index -}} , {{end -}}
+                :{{- .Name}}
+                {{- end -}}
+            )';
+			$stmt= $this->connection->prepare($sql);
+			if( $stmt->execute($data) ){ return true; }
+			return false;
+		}
+
+		function update(){
+			{{$first := 0 -}}
+			$sql = 'UPDATE {{.Name}} SET {{range $index, $element := .Columns -}}
+				{{- if not $element.Primary_Key -}}
+					{{- if eq $first 1 -}} , {{end -}}
+					{{.Name}} = ? 
+					{{- $first = 1 -}}
+				{{- end -}}
+			{{- end}} 
+
+			{{- $first = 0 }} WHERE {{range $index, $element := .Columns -}}
+            	{{- if $element.Primary_Key -}}
+            		{{- if not (eq $index 0) }} {{- if not (eq $first 1) }} AND {{end -}} {{end -}}
+            		{{.Name}} = ?
+				{{- $first = 1 -}}
+				{{- end -}}
+           	{{- end -}}';
+			$stmt = $this->connection->prepare($sql);
+			if( $stmt->execute( array(
+			{{- $first := 0 -}}
+			{{- range $index, $element := .Columns -}}
+				{{- if not $element.Primary_Key -}}
+					{{- if eq $first 1 -}} , {{end -}}
+					$this->{{.Name}}
+					{{- $first = 1 -}}
+				{{- end -}}
+			{{- end -}} 
+
+			{{- range $index, $element := .Columns -}}
+            	{{- if $element.Primary_Key -}}
+            		, $this->{{.Name}}
+				{{- end -}}
+           	{{- end -}}				
+			) ) ){ return true; }
+			return false;
+		}
+
+		function delete(){
+			{{- $first := 0 -}}
+			$sql = 'DELETE FROM {{.Name}} WHERE {{range $index, $element := .Columns -}}
+            	{{- if $element.Primary_Key -}}
+					{{- if not (eq $index 0) }} {{- if not (eq $first 1) }} AND {{end -}} {{end -}}
+            		{{.Name}} = ?
+				{{- $first = 1 -}}
+				{{- end -}}
+           	{{- end -}}';
+			$stmt = $this->connection->prepare($sql);
+			if($stmt->execute( array($this->codigo) ) ){ return true; }
+			return false;
+		}
+
+		{{if .Is_Login -}}
+		function login(){
+			$sql = 'SELECT {{.LoginId}}, {{.LoginPass}} FROM {{.Name}} WHERE {{.LoginId}} = ? AND {{.LoginPass}} = ?';
+			$stmt = $this->connection->prepare($sql);
+			if($stmt->execute( array($this->{{.LoginId}}, $this->{{.LoginPass}})) ) { return true; }
+			return false;
+		}
+		{{- end}}
+
+		function findOne(){
+			$sql = 'SELECT * FROM {{.Name}} WHERE {{range $index, $element := .Columns -}}
+            	{{- if $element.Primary_Key -}}
+					{{- if not (eq $index 0) }} {{- if not (eq $first 1) }} AND {{end -}} {{end -}}
+            		{{.Name}} = ?
+				{{- $first = 1 -}}
+				{{- end -}}
+           	{{- end -}}';
+			$stmt = $this->connection->prepare($sql);
+			if($stmt->execute( array($this->codigo) ) ) { return $stmt; }
+			return null;
+		}
+
+		function findAll(){
+			$sql = 'SELECT * FROM {{.Name}}';
+			$stmt = $this->connection->prepare($sql);
+			if($stmt->execute()) { return $stmt; }
+			return null;
+		}
+
+		function findAllPaginated($index, $cant){
+			$sql = 'SELECT * FROM {{.Name}} LIMIT ? OFFSET ?';
+			$stmt = $this->connection->prepare($sql);
+			if($stmt->execute( array($cant,($index*$cant)) ) ) { return $stmt; }
+			return null;
+		}
+	}
+?>

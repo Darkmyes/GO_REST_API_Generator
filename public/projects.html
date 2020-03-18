@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Darkmyes --Backend Generator</title>
+
+    <!--STYLE IMPORTS-->
+    <link rel="stylesheet" href="css/materialize.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/projects.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+</head>
+<body>
+    <nav class="teal darken-1">
+        <div class="nav-wrapper">
+            <a href="index.html#" class="left brand-logo">Backend Generator</a>
+            <ul class="right">
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="project.html">Project</a></li>
+                <li><a href="#help">Help</a></li>
+            </ul>
+        </div>       
+    </nav>
+
+    <div class="view" id="view">
+        <!-- Proyects -->
+        <form class="project-form">
+            <div class="project-main-info">
+                <div class="form-head">
+                    <label class="form-title">New Project</label>
+                    <button class="btn-small btn-floating"> <i class="material-icons right">add</i> </button>
+                </div>            
+    
+                <div class="input-duo">
+                    <label for="name">Name</label>
+                    <input type="text" name="name" id="name" placeholder="Name">
+                </div>
+                            
+                <label for="">Description:</label>
+                <textarea name="" id="" cols="30" rows="10"></textarea>
+    
+                <div class="input-duo">
+                    <label for="">Language</label>
+                    <select name="programming-language" id="">
+                        <option value="PHP">PHP</option>
+                        <option value="NODEJS">NodeJS</option>
+                        <option value="GO">Go</option>
+                    </select>
+                </div>
+    
+                <div class="input-duo">
+                    <label for="">Auth Mode</label>
+                    <select name="auth_mode" id="">
+                        <option value="NONE">None</option>
+                        <option value="JWT">JWT</option>
+                    </select>
+                </div>
+                
+                
+            </div>
+            <div class="database-main-data">
+                <div class="input-duo">
+                    <label for="">Data Base</label>
+                    <select name="database" id="">
+                        <option value="MYSQL">MySQL</option>
+                        <option value="POSTGRESQL">PostgresQL</option>
+                        <option value="MSSQL">SQL Server</option>
+                    </select>
+                </div>
+
+                <label for="generate_sql" class="input-duo">  
+                    <input type="checkbox" class="filled-in" name="generate_sql" id="generate_sql">
+                    <span> Generate SQL</span>
+                </label>
+    
+                <div class="database-data">
+                    <div class="input-duo">
+                        <label for="">DB Url</label>
+                        <input type="text" name="" id="">
+                    </div>
+    
+                    <div class="input-duo">
+                        <label for="">DB Port</label>
+                        <input type="text" name="" id="">
+                    </div>
+    
+                    <div class="input-duo">
+                        <label for="">DB Name</label>
+                        <input type="text" name="" id="">
+                    </div>
+    
+                    <div class="input-duo">
+                        <label for="">DB User</label>
+                        <input type="text" name="" id="">
+                    </div>
+                
+                    <div class="input-duo">
+                        <label for="">DB Password</label>
+                        <input type="text" name="" id="">
+                    </div>
+                    
+                    <!-- <div class="input-duo">
+                        <label for="">DB Charset</label>
+                        <input type="text" name="" id="">
+                    </div>
+    
+                    <div class="input-duo">
+                        <label for="">DB Collate</label>
+                        <input type="text" name="" id="">
+                    </div> -->
+                </div>
+            </div>
+        </form>
+
+        <div class="projects">
+            <div class="project">
+                <label> <span>Name:</span>  Prueba1  </label>
+                <div class="buttons">
+                    <button class="btn-edit"><i class="material-icons">edit</i></button>
+                    <button class="btn-delete"><i class="material-icons">delete</i></button>
+                </div>
+                <label> <span>Language:</span> PHP </label>
+                <label> <span>Data Base:</span> MYSQL </label>                
+                <label class="project-descriptio"> <span>Description:</span> Proyecto de prueba </label>
+            </div>
+            <div class="project">
+                <label> <span>Name:</span>  Prueba1  </label>
+                <div class="buttons">
+                    <button class="btn-edit"><i class="material-icons">edit</i></button>
+                    <button class="btn-delete"><i class="material-icons">delete</i></button>
+                </div>
+                <label> <span>Language:</span> PHP </label>
+                <label> <span>Data Base:</span> MYSQL </label>                
+                <label class="project-descriptio"> <span>Description:</span> Proyecto de prueba </label>
+            </div>
+            <div class="project">
+                <label> <span>Name:</span>  Prueba1  </label>
+                <div class="buttons">
+                    <button class="btn-edit"><i class="material-icons">edit</i></button>
+                    <button class="btn-delete"><i class="material-icons">delete</i></button>
+                </div>
+                <label> <span>Language:</span> PHP </label>
+                <label> <span>Data Base:</span> MYSQL </label>                
+                <label class="project-descriptio"> <span>Description:</span> Proyecto de prueba </label>
+            </div>
+            <div class="project">
+                <label> <span>Name:</span>  Prueba1  </label>
+                <div class="buttons">
+                    <button class="btn-edit"><i class="material-icons">edit</i></button>
+                    <button class="btn-delete"><i class="material-icons">delete</i></button>
+                </div>
+                <label> <span>Language:</span> PHP </label>
+                <label> <span>Data Base:</span> MYSQL </label>                
+                <label class="project-descriptio"> <span>Description:</span> Proyecto de prueba </label>
+            </div>
+
+        </div>
+    </div>
+
+    <!--Scripts-->
+    <script src="js/materialize.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('select');
+            var instances = M.FormSelect.init(elems, {});
+        });
+    </script>
+</body>
+</html>

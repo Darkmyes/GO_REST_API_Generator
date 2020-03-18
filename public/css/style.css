@@ -1,0 +1,23 @@
+html body{
+    margin: 0;
+}
+
+nav{
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.projects{
+    display: grid;
+    padding: 1.5rem;
+    grid-template-columns: auto;
+    gap: 1rem;
+}
+
+.project{
+    display: grid;
+    grid-template-columns: 3.5rem auto auto auto auto;
+    background-color: rgba(187, 187, 187, 0.644);
+    border-radius: 10px;
+    padding: 1rem;
+}

@@ -1,0 +1,192 @@
+
+.view{
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: 22rem auto;
+    gap: 1rem;
+    align-items: start;
+}
+
+.form-head{
+    display: flex;
+    justify-content: space-between;
+}
+
+.project-form{
+    min-width: 22rem;
+    display: grid;
+    grid-template-columns: auto;
+    column-gap: 2rem;
+    background-color: rgb(226, 226, 226);
+    border-radius: 10px;
+    padding: 1rem;
+    color: white;
+}
+
+.project-main-info{
+    display: grid;
+    grid-template-columns: auto;
+}
+
+.input-duo{
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+}
+
+.project-form .input-duo{
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+textarea{
+    min-width: 20rem;
+    min-height: 3em;
+    max-height: 10rem;
+    background-color: rgba(255, 255, 255, 0.644);
+    color: black;
+    resize: vertical;
+}
+
+form label, form span{
+    color: black;
+    font-size: 1rem;
+}
+
+.database-data{
+    display: grid;
+    grid-template-columns: auto;
+    gap: .5rem;
+    margin-top: .5rem;
+    padding: .5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    background-color: rgba(255, 255, 255, 0.644);
+    border-radius: 10px;
+}
+
+.form-title{
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.input-duo input[type="text"]{
+    max-height: 2rem;
+    font-size: 1rem;
+    margin: 0;
+}
+
+.database-data label{
+    font-size: 1rem;
+}
+
+.database-data input[type="text"]{
+    font-size: 1rem;
+    max-height: 1.5rem;
+    margin-bottom: 0;
+}
+
+.database-data .input-duo{
+    margin-bottom: 0;
+    margin-top: 0;
+}
+
+.objects{
+    display: grid;
+    grid-template-columns: auto;
+    gap: .5rem;
+    padding: 0;
+}
+
+.gen-from-bd{
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.object{
+    background-color: rgb(212, 241, 235);
+    border-radius: 10px;
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: .5rem;
+}
+
+.object table{
+    background-color: white;
+    border-radius: .5rem;
+    grid-column: span 2;
+}
+
+.object label{
+    color: black;
+    font-size: 1rem;
+}
+
+.object label span{
+    font-weight: bold;
+}
+
+.buttons{
+    display: grid;
+    grid-template-columns: 2rem 2rem;
+    gap: .5rem;
+}
+
+.btn-edit, .btn-delete{
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    border-radius: .3rem;
+    color: rgb(240, 240, 240);
+    max-width: 1.8rem;
+    max-height: 1.8rem;
+    min-width: 1.8rem;
+    min-height: 1.8rem;
+}
+
+.btn-edit i, .btn-delete i{
+    font-size: 18px;
+    margin: 0;
+    padding: 0;
+}
+
+.btn-edit{
+    background-color: rgb(10, 194, 117);
+}
+
+.btn-delete{
+    background-color: rgb(167, 39, 39);
+}
+
+@media (max-width: 1400px) {
+    .view{
+        grid-template-columns: auto;
+    }
+
+    .project-form{
+        grid-template-columns: repeat(2,auto);
+    }
+
+    .projects{
+        padding-left: 0;
+    }
+}
+/* 
+@media (max-width: 650px) {
+    .view{
+        grid-template-columns: auto;
+    }
+
+    .project-form{
+        grid-template-columns: auto;
+    }
+
+} */

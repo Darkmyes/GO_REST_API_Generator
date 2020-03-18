@@ -1,0 +1,19 @@
+const { Router } = require('express');
+const router = Router();
+//const verifyToken = require('../controllers/verifyToken')
+
+const {{.Name}} = require('../controllers/{{.Name}}.controller');
+
+router.route('/')
+	.get(/* verifyToken, */ {{.Name}}.FindAll)
+	.post(/*verifyToken, */ {{.Name}}.Insert)
+	.put(/* verifyToken, */ {{.Name}}.Update)
+	.delete(/* verifyToken, */ {{.Name}}.Delete);
+
+router.route('/:id')
+	.get(/* verifyToken, */ {{.Name}}.FindOne)
+
+/*router.route('/:index/:count')
+	.get( verifyToken,  {{.Name}}.FindAllPaginated);*/
+
+module.exports = router;

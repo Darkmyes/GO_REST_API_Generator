@@ -1,0 +1,36 @@
+<?php
+    class Database{
+        private $conn;
+
+        public function __construct(){
+            $url = "{{.Db_Data.Db_Url}}";
+            $database = "{{.Db_Data.Db_Name}}";
+            $user = "{{.Db_Data.Db_User}}";
+            $password = "{{.Db_Data.Db_Pass}}";
+            $port = "{{.Db_Data.Db_Port}}";
+            $charset = "{{.Db_Data.DB_Charset}}";
+
+            try{
+                {{if eq .Db "MYSQL" -}}
+                $this->conn = new PDO('mysql:host='.$url.';dbname='.$database.';port:'.$port,$user,$password);
+		//$this->conn = new PDO('mysql:host='.$url.';dbname='.$database.';port:'.$port.';charset='.$charset,$user,$password);
+                {{- else if eq .Db "POSTGRESQL" -}}
+                $this->conn = new PDO('pgsql:host=$url;port:$port;dbname=$_base;charset=$charset',$user,$password);
+                {{- else if eq .Db "SQLSERVER" -}}
+                $this->conn = new PDO('sqlsrv:host=$url;port:$port;dbname=$_base;charset=$charset',$user,$password);
+                {{- end}}
+            } catch(Exception $e) {
+                error_log($e->getMessage());
+                //exit('Something weird happened');
+            }
+        }
+
+        public function connect(){
+            return $this->conn;
+        }
+
+        public function disconnect(){
+            $this->conn = null;
+        }
+    }
+?>

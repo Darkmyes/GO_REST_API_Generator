@@ -1,0 +1,42 @@
+CREATE TABLE {{ .Tbl_Name }} (
+	{{range $index, $col := .Columns -}}
+		{{$col.Col_Name}} {{$col.Col_Type}}
+		{{- if not (eq $col.Col_Lenght 0 ) }} {{$col.Col_Lenght}} {{- end }}
+		{{- range $ind, $en := $col.Enum_List -}}
+			{{$en}} ,
+		{{- end -}} 
+		{{- if $col.Is_Unique}} UNIQUE {{- end }}
+		{{- if not $col.Is_Null}} NOT NULL {{- end }} ,
+	{{end -}}
+	{{- range $index, $col := .Columns -}}
+		{{- if $col.Foreign_Key -}}
+			FOREIGN KEY ( {{ $col.Col_Name }} ) REFERENCES {{$col.Tbl_Ref}} (
+				{{- range $ind, $en := $col.Col_Refs -}}
+					{{if eq $ind 0 -}}
+						{{$en -}}
+					{{else -}}
+						, {{$en -}}
+					{{end -}}
+				{{- end -}} 
+			) ON UPDATE {{$col.On_Update}} ON DELETE {{$col.On_Delete}} ,
+		{{- end -}}		
+	{{- end }}
+	{{- $cont := 0 }}
+	PRIMARY KEY (
+	{{- range $index, $col := .Columns -}}
+		{{- if $col.Primary_Key -}}			
+			{{if eq $cont 0 -}}
+				{{$col.Col_Name -}}
+				{{- $cont = 1 -}}
+			{{else -}}
+				, {{$col.Col_Name -}}
+			{{end -}}			
+		{{- end -}}		
+	{{- end }})
+	{{range $index, $col := .Columns -}}
+		{{if $col.Is_Index -}}
+			,INDEX ({{$col.Col_Name -}})
+		{{- end -}}
+	{{- end}}	
+) ENGINE = INNODB;
+

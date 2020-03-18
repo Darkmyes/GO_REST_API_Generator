@@ -1,0 +1,276 @@
+const {{.Name}}Ctrl = {};
+
+const {sql,poolPromise} = require('../db.js');
+
+{{.Name}}Ctrl.Insert = async (req, res) => {
+	try {
+		const pool = await poolPromise;
+		const obj = req.body;
+		//console.log(obj);
+		const result = await new sql.Request(pool);
+
+        {{range $index, $element := .Columns -}}
+        result.input('{{- .Name -}}',
+		{{- if eq .Col_Type "INT" -}}
+		sql.Int, 
+		{{- end -}} 
+		{{- if eq .Col_Type "VARCHAR" -}}
+		sql.VarChar,
+		{{- end -}}
+		{{- if eq .Col_Type "CHAR" -}}
+		sql.Char,
+		{{- end -}}
+		{{- if eq .Col_Type "DECIMAL" -}}
+		sql.Decimal,
+		{{- end -}}
+		{{- if eq .Col_Type "DATETIME" -}}
+		sql.DateTime,
+		{{- end -}}	
+		obj.{{- .Name -}});
+        {{end}}
+
+		result.query(
+			'INSERT INTO {{.Name}}(
+                {{- range $index, $element := .Columns -}}
+                {{- if $index -}} , {{end -}}
+                {{- .Name}}
+                {{- end -}}
+            ) VALUES (
+                {{- range $index, $element := .Columns -}}
+                {{- if $index -}} , {{end -}}
+                @{{- .Name}}
+                {{- end -}}
+            )',
+			
+			(err, result) => {
+				if (err) {
+					console.log(err);
+					res.json('Error al ingresar ');
+					return;
+				}
+				console.log(result);
+				//res.send(result.recordset);
+				res.status(200);
+				res.json('Datos ingresados correctamente');
+			}
+
+		)
+	} catch(err) {
+		console.log(err);
+		res.status(400).json({
+		error: err
+		});
+	}
+}
+
+{{.Name}}Ctrl.Update = async (req, res) => {
+	try {
+		const pool = await poolPromise;
+		const obj = req.body;
+		const result = await new sql.Request(pool);
+		
+        {{range $index, $element := .Columns -}}
+        result.input('{{- .Name -}}', 
+		{{- if eq .Col_Type "INT" -}}
+		sql.Int, 
+		{{- end -}} 
+		{{- if eq .Col_Type "VARCHAR" -}}
+		sql.VarChar,
+		{{- end -}}
+		{{- if eq .Col_Type "CHAR" -}}
+		sql.Char,
+		{{- end -}}
+		{{- if eq .Col_Type "DECIMAL" -}}
+		sql.Decimal,
+		{{- end -}}
+		{{- if eq .Col_Type "DATETIME" -}}
+		sql.DateTime,
+		{{- end -}}	
+		obj.{{- .Name -}});
+        {{end}}
+		result.query(
+            {{$first := 0 -}}			
+			'UPDATE {{.Name}} SET {{range $index, $element := .Columns -}}
+				{{- if not $element.Primary_Key -}}
+					{{- if eq $first 1 -}} , {{end -}}
+					{{.Name}} = @{{.Name}}
+					{{- $first = 1 -}}
+				{{- end -}}
+			{{- end}}
+
+            {{- $first = 0 }} WHERE {{range $index, $element := .Columns -}}
+            	{{- if $element.Primary_Key -}}
+            		{{- if not (eq $first 1) }}{{- if not (eq 0 $index) -}} AND {{- end -}}{{end -}}
+            		{{.Name}} = @{{.Name}}
+				{{- $first = 1 -}}
+				{{- end -}}
+           	{{- end -}}',
+			(err, result) => {
+				if (err) {
+					console.log(err);
+					res.json('Error al actualizar');
+					return;
+				}
+				console.log(result);
+				//res.send(result.recordset);
+				res.status(200);
+				res.json('Datos actualizados correctamente');
+			}
+
+		)
+	} catch(err) {
+		res.status(400).json({
+			error: err
+		});
+	}
+}
+
+{{.Name}}Ctrl.Delete = async (req, res) => {
+	try {
+		const pool = await poolPromise;
+		const obj = req.body;
+		const result = await new sql.Request(pool);
+
+        {{ $first := 0 -}}
+        {{range $index, $element := .Columns -}}
+            {{- if $element.Primary_Key -}}
+                result.input('{{.Name}}', 
+				{{- if eq .Col_Type "INT" -}}
+				sql.Int, 
+				{{- end -}} 
+				{{- if eq .Col_Type "VARCHAR" -}}
+				sql.VarChar,
+				{{- end -}}
+				{{- if eq .Col_Type "CHAR" -}}
+				sql.Char,
+				{{- end -}}
+				{{- if eq .Col_Type "DECIMAL" -}}
+				sql.Decimal,
+				{{- end -}}
+				{{- if eq .Col_Type "DATETIME" -}}
+				sql.DateTime,
+				{{- end -}}	
+				obj.{{.Name}});
+            {{- $first = 1 -}}
+            {{- end -}}
+        {{end}}
+
+		result.query(
+            {{- $first := 0 -}}
+			'DELETE FROM {{.Name}} WHERE {{range $index, $element := .Columns -}}
+            	{{- if $element.Primary_Key -}}
+            		{{- if not (eq $first 1) }}{{- if not (eq 0 $index) -}} AND {{- end -}}{{end -}}
+            		{{.Name}} = ?
+				{{- $first = 1 -}}
+				{{- end -}}
+           	{{- end -}}',
+			(err, result) => {
+				if (err) {
+					console.log(err);
+					res.json('Error al eliminar ');
+					return;
+				}
+				console.log(result);
+				//res.send(result.recordset);
+				res.status(200);
+				res.json('Datos eliminados correctamente');
+			}
+
+		)
+	} catch(err) {
+		res.status(400).json({
+			error: err
+		});
+	}
+}
+
+{{.Name}}Ctrl.FindOne = async (req, res) => {
+	try {
+		const pool = await poolPromise;
+		const obj = req.body;
+		const result = await new sql.Request(pool);
+    
+        {{ $first := 0 -}}
+        {{range $index, $element := .Columns -}}
+            {{- if $element.Primary_Key -}}
+				result.input('{{.Name}}', 
+				{{- if eq .Col_Type "INT" -}}
+				sql.Int, 
+				{{- end -}} 
+				{{- if eq .Col_Type "VARCHAR" -}}
+				sql.VarChar,
+				{{- end -}}
+				{{- if eq .Col_Type "CHAR" -}}
+				sql.Char,
+				{{- end -}}
+				{{- if eq .Col_Type "DECIMAL" -}}
+				sql.Decimal,
+				{{- end -}}
+				{{- if eq .Col_Type "DATETIME" -}}
+				sql.DateTime,
+				{{- end -}}	
+				obj.{{.Name}});
+            {{- $first = 1 -}}
+            {{- end -}}
+        {{end}}
+
+		result.query(
+            {{- $first := 0 -}}
+			'SELECT* FROM {{.Name}} WHERE {{range $index, $element := .Columns -}}
+            	{{- if $element.Primary_Key -}}
+            		{{- if not (eq $first 1) }}{{- if not (eq 0 $index) -}} AND {{- end -}}{{end -}}
+            		{{.Name}} = ?
+				{{- $first = 1 -}}
+				{{- end -}}
+           	{{- end -}}',
+			(err, result) => {
+				if (err) {
+					console.log(err);
+					res.json('Error al buscar ');
+					return;
+				}
+				console.log(result);
+				res.status(200);
+				res.send(result.recordset);
+			}
+
+		)
+	} catch(err) {
+		res.status(400).json({
+			error: err
+		});
+	}
+}
+
+{{.Name}}Ctrl.FindAll = async (req, res) => {
+	try {
+		const pool = await poolPromise;
+		const obj = req.body; 
+		if(Object.keys(obj).length !=0){
+			/* if(typeof obj!="undefined"){ */
+				{{.Name}}Ctrl.FindOne(req,res);
+				return;
+			} 
+		const result = await new sql.Request(pool);
+		result.query(
+			'select * from {{.Name}}',
+			(err, result) => {
+				if (err) {
+					console.log(err);
+					res.json('Error al buscar');
+					return;
+				}
+				console.log(result);
+				res.status(200);
+				res.send(result.recordset);
+			}
+
+		)
+	} catch(err) {
+		res.status(400).json({
+			error: err
+		});
+	}
+}
+
+module.exports = {{.Name}}Ctrl;

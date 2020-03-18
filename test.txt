@@ -1,0 +1,18 @@
+
+
+//LEER Y GENERAR BACKEND DESDE BD
+.\main.exe -mode=db_read_gen -db=mysql -server=localhost -user=root -pass=Qweasdzxc1234 -db_name=turismo_chone -folder=prueba -lang=nodejs
+
+//SOLO LEER BASE DE DATOS
+.\main.exe -mode=db_read -db=mysql -server=localhost -user=root -pass=Qweasdzxc1234 -db_name=turismo_chone -folder=public
+
+//SOLO GENERAR REST API
+.\main.exe -mode=gen -lang=nodejs
+
+//INFO GENERAL
+.\main.exe
+.\main.exe -mode=info
+
+//INFO DE LAS BANDERAS
+.\main.exe -h
+.\main.exe --help

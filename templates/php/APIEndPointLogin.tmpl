@@ -1,0 +1,61 @@
+<?php
+	header('Access-Control-Allow-Origin: *');
+	header('Content-Type: application/json');
+
+	$contentType = isset($_SERVER['CONTENT_TYPE']) ? trim($_SERVER['CONTENT_TYPE']) : '';
+	if( (strcasecmp($contentType, 'application/json') != 0)
+		&& ($_SERVER['REQUEST_METHOD'] === 'POST') ){
+		header('HTTP/1.1 404 Bad Request', true, 404);
+		return;
+	}
+
+	include_once '../libs/php-jwt-master/src/BeforeValidException.php';
+	include_once '../libs/php-jwt-master/src/ExpiredException.php';
+	include_once '../libs/php-jwt-master/src/SignatureInvalidException.php';
+	include_once '../libs/php-jwt-master/src/JWT.php';
+	include_once '../config/jwt_config.php';
+	use \Firebase\JWT\JWT;
+
+	$bodydata = trim(file_get_contents('php://input'));
+	$jsondata = json_decode($bodydata, true);
+
+	if(!is_array($jsondata)){
+		header('HTTP/1.1 404 Bad Request');
+	}
+
+	include_once '../connection.php';
+	include_once '../models/{{- .Name -}}.php';
+
+	$db = new Database();
+	$conn = $db->connect();
+	${{- .Name -}} = new {{.Name -}}();
+	${{- .Name -}}->connection = $conn;
+
+    $pruebita1->id = isset($jsondata['id']) ? $jsondata['id'] : '';
+    ${{.Name -}}->{{.LoginId}} = isset($jsondata['{{.LoginId}}']) ? utf8_decode($jsondata['{{.LoginId}}']) : '';
+    ${{.Name -}}->{{.LoginPass}} = isset($jsondata['{{.LoginPass}}']) ? utf8_decode($jsondata['{{.LoginPass}}']) : '';
+
+	if( ${{.Name -}}->login() ){
+		$token = array(
+			'iss' => $iss
+			'aud' => $aud
+			'iat' => $iat
+			'nbf' => $nbf
+			'data' => array(
+			)
+		);
+
+		$jwt = JWT::encode($token, $key);
+
+		header('HTTP/1.1 200 Ok', true, 200);
+		echo json_encode(
+			array(
+				'message' => 'Successful login.',
+				'token' => $jwt
+			)
+		);
+	}else{
+		header('HTTP/1.1 401 Unauthorized', true, 401);
+		echo json_encode( array('message' => 'LOGIN FAILED, BAD CREDENTIALS') );
+	}
+?>
